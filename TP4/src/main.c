@@ -1,35 +1,35 @@
 #include <stdio.h>
-#include <string.h>
 #include "fichier.h"
 
+typedef struct {
+    char nom[50];
+    char prenom[50];
+    char adresse[100];
+    float note1;
+    float note2;
+} Etudiant;
+
 int main() {
-    int choix;
-    char nom[100];
-    char message[1000];
+    Etudiant etudiants[5];
+    char ligne[256];
 
-    printf("Que souhaitez-vous faire ?\n1. Lire un fichier\n2. Écrire dans un fichier\nVotre choix : ");
-    scanf("%d", &choix);
-    getchar(); // Pour consommer le retour chariot après scanf
+    for (int i = 0; i < 5; i++) {
+        printf("Entrez les détails de l'étudiant.e %d :\n", i+1);
+        printf("Nom : "); scanf("%s", etudiants[i].nom);
+        printf("Prénom : "); scanf("%s", etudiants[i].prenom);
+        printf("Adresse : "); scanf(" %[^\n]", etudiants[i].adresse); // lit la ligne complète
+        printf("Note 1 : "); scanf("%f", &etudiants[i].note1);
+        printf("Note 2 : "); scanf("%f", &etudiants[i].note2);
 
-    if (choix == 1) {
-        printf("Entrez le nom du fichier à lire : ");
-        fgets(nom, sizeof(nom), stdin);
-        nom[strcspn(nom, "\n")] = 0; // enlever le '\n'
-        printf("Contenu du fichier %s :\n", nom);
-        lire_fichier(nom);
-    } else if (choix == 2) {
-        printf("Entrez le nom du fichier dans lequel vous souhaitez écrire : ");
-        fgets(nom, sizeof(nom), stdin);
-        nom[strcspn(nom, "\n")] = 0;
+        // Formatage de la ligne à écrire
+        snprintf(ligne, sizeof(ligne), "%s %s %s %.2f %.2f\n",
+                 etudiants[i].nom, etudiants[i].prenom, etudiants[i].adresse,
+                 etudiants[i].note1, etudiants[i].note2);
 
-        printf("Entrez le message à écrire : ");
-        fgets(message, sizeof(message), stdin);
-        message[strcspn(message, "\n")] = 0;
-
-        ecrire_dans_fichier(nom, message);
-    } else {
-        printf("Choix invalide.\n");
+        ecrire_dans_fichier("etudiant.txt", ligne);
     }
+
+    printf("Les détails des étudiants ont été enregistrés dans le fichier etudiant.txt.\n");
 
     return 0;
 }
