@@ -1,36 +1,29 @@
+#include "liste.h"
 #include <stdio.h>
-#include "etudiant.h"
-#include "fichier.h"
 
 int main() {
-    Etudiant etudiants[5];
-    char buffer[200];
+    struct liste_couleurs ma_liste;
+    init_liste(&ma_liste);
 
-    for (int i = 0; i < 5; i++) {
-        printf("Entrez les details de l'etudiant.e %d :\n", i+1);
-        printf("Nom : ");
-        scanf(" %[^\n]", etudiants[i].nom);
-        printf("Prenom : ");
-        scanf(" %[^\n]", etudiants[i].prenom);
-        printf("Adresse : ");
-        scanf(" %[^\n]", etudiants[i].adresse);
-        printf("Note 1 : ");
-        scanf("%f", &etudiants[i].note1);
-        printf("Note 2 : ");
-        scanf("%f", &etudiants[i].note2);
+    struct couleur couleurs[10] = {
+        {0xFF,0x00,0x00,0xFF}, // rouge
+        {0x00,0xFF,0x00,0xFF}, // vert
+        {0x00,0x00,0xFF,0xFF}, // bleu
+        {0xFF,0xFF,0x00,0xFF}, // jaune
+        {0xFF,0x00,0xFF,0xFF}, // magenta
+        {0x00,0xFF,0xFF,0xFF}, // cyan
+        {0x80,0x80,0x80,0xFF}, // gris
+        {0xFF,0xA5,0x00,0xFF}, // orange
+        {0xA5,0x2A,0x2A,0xFF}, // marron
+        {0x00,0x00,0x00,0xFF}  // noir
+    };
 
-        // Création d'une ligne formatée pour le fichier
-        sprintf(buffer, "%s %s %s %.2f %.2f",
-                etudiants[i].nom, etudiants[i].prenom, etudiants[i].adresse,
-                etudiants[i].note1, etudiants[i].note2);
-
-        ecrire_dans_fichier("etudiant.txt", buffer);
+    for (int i = 0; i < 10; i++) {
+        insertion(&couleurs[i], &ma_liste);
     }
 
-    printf("\nLes details des etudiants ont ete enregistres dans etudiant.txt\n");
-
-    printf("\nLecture du fichier etudiant.txt :\n");
-    lire_fichier("etudiant.txt");
+    printf("Liste des couleurs :\n");
+    parcours(&ma_liste);
 
     return 0;
 }
