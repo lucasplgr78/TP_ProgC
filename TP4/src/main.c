@@ -36,6 +36,27 @@ void exercice4_2() {
     char message[256];
 
     printf("Exercice 4.2 : Gestion de fichiers\n");
+
+    int main() {
+    int choix;
+
+    printf("Choisissez l'exercice à exécuter :\n");
+    printf("1. Exercice 4.1 : Calcul avec opérateurs\n");
+    printf("2. Exercice 4.2 : Gestion de fichiers\n");
+    printf("3. Exercice 4.7 : Liste de couleurs\n");
+    printf("Votre choix : ");
+    scanf("%d", &choix);
+
+    switch(choix) {
+        case 1: exercice4_1(); break;
+        case 2: exercice4_2(); break;
+        case 3: exercice4_7(); break;
+        default: printf("Choix invalide !\n"); break;
+    }
+
+    return 0;
+}
+
     printf("Que souhaitez-vous faire ?\n1. Lire un fichier\n2. Écrire dans un fichier\nVotre choix : ");
     scanf("%d", &choix);
 
