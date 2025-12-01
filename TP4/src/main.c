@@ -1,34 +1,35 @@
 #include <stdio.h>
-#include "operator.h"
+#include <string.h>
+#include "fichier.h"
 
 int main() {
-    int num1, num2;
-    char op;
+    int choix;
+    char nom[100];
+    char message[1000];
 
-    printf("Entrez num1 : ");
-    scanf("%d", &num1);
-    printf("Entrez num2 : ");
-    scanf("%d", &num2);
-    printf("Entrez l'opérateur (+, -, *, /, %%, &, |, ~) : ");
-    scanf(" %c", &op); // espace avant %c pour ignorer le retour à la ligne précédent
+    printf("Que souhaitez-vous faire ?\n1. Lire un fichier\n2. Écrire dans un fichier\nVotre choix : ");
+    scanf("%d", &choix);
+    getchar(); // Pour consommer le retour chariot après scanf
 
-    int result;
+    if (choix == 1) {
+        printf("Entrez le nom du fichier à lire : ");
+        fgets(nom, sizeof(nom), stdin);
+        nom[strcspn(nom, "\n")] = 0; // enlever le '\n'
+        printf("Contenu du fichier %s :\n", nom);
+        lire_fichier(nom);
+    } else if (choix == 2) {
+        printf("Entrez le nom du fichier dans lequel vous souhaitez écrire : ");
+        fgets(nom, sizeof(nom), stdin);
+        nom[strcspn(nom, "\n")] = 0;
 
-    switch(op) {
-        case '+': result = somme(num1, num2); break;
-        case '-': result = difference(num1, num2); break;
-        case '*': result = produit(num1, num2); break;
-        case '/': result = quotient(num1, num2); break;
-        case '%': result = modulo(num1, num2); break;
-        case '&': result = et(num1, num2); break;
-        case '|': result = ou(num1, num2); break;
-        case '~': result = negation(num1); break;
-        default:
-            printf("Opérateur inconnu.\n");
-            return 1;
+        printf("Entrez le message à écrire : ");
+        fgets(message, sizeof(message), stdin);
+        message[strcspn(message, "\n")] = 0;
+
+        ecrire_dans_fichier(nom, message);
+    } else {
+        printf("Choix invalide.\n");
     }
 
-    printf("Résultat : %d\n", result);
     return 0;
 }
-
