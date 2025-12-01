@@ -1,35 +1,36 @@
 #include <stdio.h>
+#include "etudiant.h"
 #include "fichier.h"
-
-typedef struct {
-    char nom[50];
-    char prenom[50];
-    char adresse[100];
-    float note1;
-    float note2;
-} Etudiant;
 
 int main() {
     Etudiant etudiants[5];
-    char ligne[256];
+    char buffer[200];
 
     for (int i = 0; i < 5; i++) {
-        printf("Entrez les détails de l'étudiant.e %d :\n", i+1);
-        printf("Nom : "); scanf("%s", etudiants[i].nom);
-        printf("Prénom : "); scanf("%s", etudiants[i].prenom);
-        printf("Adresse : "); scanf(" %[^\n]", etudiants[i].adresse); // lit la ligne complète
-        printf("Note 1 : "); scanf("%f", &etudiants[i].note1);
-        printf("Note 2 : "); scanf("%f", &etudiants[i].note2);
+        printf("Entrez les details de l'etudiant.e %d :\n", i+1);
+        printf("Nom : ");
+        scanf(" %[^\n]", etudiants[i].nom);
+        printf("Prenom : ");
+        scanf(" %[^\n]", etudiants[i].prenom);
+        printf("Adresse : ");
+        scanf(" %[^\n]", etudiants[i].adresse);
+        printf("Note 1 : ");
+        scanf("%f", &etudiants[i].note1);
+        printf("Note 2 : ");
+        scanf("%f", &etudiants[i].note2);
 
-        // Formatage de la ligne à écrire
-        snprintf(ligne, sizeof(ligne), "%s %s %s %.2f %.2f\n",
-                 etudiants[i].nom, etudiants[i].prenom, etudiants[i].adresse,
-                 etudiants[i].note1, etudiants[i].note2);
+        // Création d'une ligne formatée pour le fichier
+        sprintf(buffer, "%s %s %s %.2f %.2f",
+                etudiants[i].nom, etudiants[i].prenom, etudiants[i].adresse,
+                etudiants[i].note1, etudiants[i].note2);
 
-        ecrire_dans_fichier("etudiant.txt", ligne);
+        ecrire_dans_fichier("etudiant.txt", buffer);
     }
 
-    printf("Les détails des étudiants ont été enregistrés dans le fichier etudiant.txt.\n");
+    printf("\nLes details des etudiants ont ete enregistres dans etudiant.txt\n");
+
+    printf("\nLecture du fichier etudiant.txt :\n");
+    lire_fichier("etudiant.txt");
 
     return 0;
 }
